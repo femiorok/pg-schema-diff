@@ -4,6 +4,19 @@
 [![Go Reference](https://pkg.go.dev/badge/github.com/stripe/pg-schema-diff.svg)](https://pkg.go.dev/github.com/stripe/pg-schema-diff)
 ![GitHub Release](https://img.shields.io/github/v/release/stripe/pg-schema-diff?include_prereleases)
 
+> ## Fork addendum
+>
+> This fork (`femiorok/pg-schema-diff`) carries the following upstream PRs that are still open against `stripe/pg-schema-diff`. The full acceptance suite passes on PostgreSQL 15 against this combined state.
+>
+> | Upstream PR | Fix |
+> |---|---|
+> | [#286](https://github.com/stripe/pg-schema-diff/pull/286) | Dependency ordering between functions, views, and materialized views. Fixes cases where the generated plan creates a view before the function/table it references (or drops them in the wrong order), and cascades recreation when a view's dependency is itself recreated. |
+> | [#274](https://github.com/stripe/pg-schema-diff/pull/274) | `DEFERRABLE` / `INITIALLY DEFERRED` attribute on unique constraints is now read from `pg_constraint` and preserved through diffing — eliminates the spurious infinite diff documented in issue [#273](https://github.com/stripe/pg-schema-diff/issues/273). |
+> | [#270](https://github.com/stripe/pg-schema-diff/pull/270) | When a column's type is altered, any view that depends on it is now dropped before and recreated after — fixes `cannot alter type of a column used by a view or rule` (Postgres `0A000`). |
+> | [#277](https://github.com/stripe/pg-schema-diff/pull/277) | Bumps `jackc/pgx` v4 → v5. v4 is EOL and has active advisory [GHSA-jqcq-xjh3-6g23](https://github.com/advisories/GHSA-jqcq-xjh3-6g23). |
+>
+> Additionally, one local fixup updates a stale hazard expectation in PR #274's deferrable-constraint tests (`ALTER TABLE ... DROP CONSTRAINT` correctly emits `ACQUIRES_ACCESS_EXCLUSIVE_LOCK`, which the PR's tests did not assert).
+
 Computes the diff(erences) between Postgres database schemas and generates the SQL required to get your database schema from point A to B with 
 minimal downtime & locks. This enables you to take your database and migrate it to any desired schema defined in plain DDL.
 
