@@ -935,6 +935,7 @@ var indexAcceptanceTestCases = []acceptanceTestCase{
 		expectedHazardTypes: []diff.MigrationHazardType{
 			diff.MigrationHazardTypeIndexDropped,
 			diff.MigrationHazardTypeIndexBuild,
+			diff.MigrationHazardTypeAcquiresAccessExclusiveLock,
 		},
 	},
 	{
@@ -960,6 +961,7 @@ var indexAcceptanceTestCases = []acceptanceTestCase{
 		expectedHazardTypes: []diff.MigrationHazardType{
 			diff.MigrationHazardTypeIndexDropped,
 			diff.MigrationHazardTypeIndexBuild,
+			diff.MigrationHazardTypeAcquiresAccessExclusiveLock,
 		},
 	},
 }
